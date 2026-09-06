@@ -1,14 +1,19 @@
 # Runbook — checks before pushing
 
-This site is deployed via GitHub Pages at
-`https://deepgenai-ai.github.io/deepgenai.ai/` (not yet on the
-`deepgenai.ai` custom domain — see "Deployment / domain" below). GitHub
-Pages builds with **`_config.yml` only**, using a non-empty `baseurl`
-(`/deepgenai.ai`), which is what makes this repo unusually easy to break in
-a way that only shows up after you push: a link that works fine in local
-dev (baseurl `""`) can 404 in production if it skips Jekyll's `relative_url`
-filter. That exact bug shipped twice in one session before this runbook
-existed — hence this checklist and `bin/checklinks.rb`.
+This site is deployed via GitHub Pages on the `deepgenai.ai` custom domain
+(root, `baseurl: ""` — see "Deployment / domain" below). GitHub Pages
+builds with **`_config.yml` only**. Before the custom domain was wired up,
+this repo briefly ran with a non-empty `baseurl` (`/deepgenai.ai`, to match
+the interim `deepgenai-ai.github.io/deepgenai.ai/` project-page URL), and
+that's what makes this repo unusually easy to break in a way that only
+shows up after you push: a link that skips Jekyll's `relative_url` filter
+works fine whenever `baseurl` is `""` and silently 404s the moment it isn't
+— which is exactly what happened twice in one session before this runbook
+existed. `baseurl` is `""` again now, so that specific failure mode is
+dormant, but keep using `relative_url` for every internal link anyway
+(cheap insurance if `baseurl` ever changes again — e.g. a future preview
+deploy under a subpath) and keep running `bin/checklinks.rb`, which also
+catches plain broken/typo'd links regardless of baseurl.
 
 ## Local dev
 
@@ -16,12 +21,13 @@ existed — hence this checklist and `bin/checklinks.rb`.
 bundle exec jekyll serve --port 4000 --config _config.yml,_config_dev.yml
 ```
 
-`_config_dev.yml` overrides `baseurl`/`url` for local serving so links
-resolve at plain `http://127.0.0.1:4000/`. Don't run local dev with just
-`_config.yml` unless you're deliberately reproducing the production
-baseurl (e.g. debugging a link issue) — pass `--baseurl /deepgenai.ai` if
-you do, and remember the server address becomes
-`http://127.0.0.1:4000/deepgenai.ai/`, not the plain root.
+`_config_dev.yml` overrides `url` for local serving (points it at
+`127.0.0.1:4000` instead of `https://deepgenai.ai`, which mostly matters
+for canonical tags/sitemap, not for links) — `baseurl` is `""` in both
+configs now, so plain `bundle exec jekyll serve` works fine too if you
+don't need that. Still prefer the `--config` form above out of habit;
+if `baseurl` ever needs to diverge from production again (see the intro),
+this is the file that absorbs it.
 
 ## Before every push
 
@@ -33,8 +39,8 @@ you do, and remember the server address becomes
    bundle exec ruby bin/checklinks.rb
    ```
 
-   This catches: links missing the `/deepgenai.ai` baseurl prefix (a raw
-   `href="/foo/"` or `{{ item.url }}` instead of
+   This catches: links missing the `baseurl` prefix if it's ever non-empty
+   again (a raw `href="/foo/"` or `{{ item.url }}` instead of
    `{{ '/foo/' | relative_url }}`), links pointing at pages that don't
    exist, and a build accidentally containing `localhost`/`127.0.0.1`
    (a sign the dev config leaked into what should be a production build).
@@ -81,16 +87,21 @@ you do, and remember the server address becomes
 
 ## Deployment / domain
 
-- Production config (`_config.yml`): `url: https://deepgenai-ai.github.io`,
-  `baseurl: /deepgenai.ai`. This matches the current GitHub Pages
-  project-page URL, **not** the eventual `deepgenai.ai` custom domain.
-- `deepgenai.ai`'s DNS currently points to a live GoDaddy Website Builder
-  site (confirmed 2026-09-06) — something real is served there today, so
-  don't add a `CNAME` file or point DNS at GitHub Pages without the
-  owner's explicit go-ahead.
-- When the custom domain is actually wired up: change `_config.yml` to
-  `url: https://deepgenai.ai`, `baseurl: ""`, add a `CNAME` file containing
-  `deepgenai.ai`, and point DNS at GitHub Pages. GitHub Pages will then
-  301-redirect the old `deepgenai-ai.github.io/deepgenai.ai/` URL to the
-  custom domain automatically — you don't need both configs to work at
-  once.
+- Production config (`_config.yml`): `url: https://deepgenai.ai`,
+  `baseurl: ""`. Matches the `CNAME` file (`deepgenai.ai`) and the custom
+  domain set in the repo's GitHub Pages settings (owner-configured
+  2026-09-06). The old interim URL,
+  `https://deepgenai-ai.github.io/deepgenai.ai/`, should 301-redirect to
+  the custom domain automatically once DNS/HTTPS are fully live — no
+  config on our side handles that, it's GitHub Pages' behavior whenever a
+  `CNAME` file is present.
+- Before this, `deepgenai.ai`'s DNS pointed to a live GoDaddy Website
+  Builder site (confirmed 2026-09-06) — the owner is the one switching
+  DNS to GitHub Pages, not something to redo/undo from this repo. If
+  `deepgenai.ai` ever stops resolving to this site, that's a DNS/registrar
+  question, not a Jekyll one — don't "fix" it by reverting `url`/`baseurl`
+  without checking with the owner first.
+- If a future preview ever needs to run from a subpath again (e.g. back on
+  `deepgenai-ai.github.io/deepgenai.ai/`), that means `baseurl` needs to
+  be non-empty again for that build — see the intro above for why that's
+  the one config change most likely to break links.
