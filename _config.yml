@@ -57,6 +57,8 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor
+  - bin
+  - RUNBOOK.md
   - node_modules
   - README.md
   - docs
