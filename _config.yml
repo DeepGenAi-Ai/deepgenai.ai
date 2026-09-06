@@ -5,7 +5,7 @@ description: >-
   decision-making through a practical blend of industrial statistics, Lean Six
   Sigma, AI, analytics and digital transformation.
 url: "https://deepgenai-ai.github.io"
-baseurl: "/deepgenai.ai"
+baseurl: "/deepgenai.ai" # GitHub Pages always builds with only this file — see _config_dev.yml for local serve
 email: info@deepgenai.ai
 logo: /assets/img/logo.png
 google_analytics: G-2LB8QY6H59

@@ -1,0 +1,9 @@
+# Local-only overrides, merged on top of _config.yml. GitHub Pages always
+# builds with just _config.yml (baseurl "/deepgenai.ai", matching the
+# deepgenai-ai.github.io/deepgenai.ai/ project-page URL), so links/assets
+# would 404 if you served that same baseurl locally at the site root.
+#
+# Run local dev with both files so links resolve at plain localhost:
+#   bundle exec jekyll serve --config _config.yml,_config_dev.yml
+url: "http://127.0.0.1:4000"
+baseurl: ""
