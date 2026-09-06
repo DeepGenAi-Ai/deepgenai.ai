@@ -1,0 +1,280 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: $font-body;
+  color: $ink-900;
+  background: $white;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.55;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: $font-display;
+  line-height: 1.1;
+  margin: 0 0 0.5em;
+  letter-spacing: -0.02em;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+.container {
+  max-width: $container;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+// Offsets anchor-jump targets (e.g. /industries/#aerospace) so the sticky
+// header doesn't cover the top of whatever was linked to.
+[id] {
+  scroll-margin-top: 96px;
+}
+
+// Scroll-triggered reveal — .reveal is added by JS (assets/js/effects.js),
+// so a page with JS disabled/failed never gets hidden in the first place.
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@for $i from 1 through 8 {
+  .service-grid > .reveal:nth-child(#{$i}),
+  .industry-grid > .reveal:nth-child(#{$i}),
+  .problem-grid > .reveal:nth-child(#{$i}),
+  .stat-strip > .reveal:nth-child(#{$i}),
+  .process-rail > .reveal:nth-child(#{$i}) {
+    transition-delay: #{$i * 0.06}s;
+  }
+}
+
+// Fixed-position chrome: scroll progress bar + back-to-top -----------------
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, $blue-400, $amber-500);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: $blue-900;
+  color: $white;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: $shadow-lg;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.25s ease, transform 0.25s ease, background 0.15s ease;
+  z-index: 150;
+  pointer-events: none;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: $blue-700;
+}
+
+// Give the button breathing room above the cookie banner while it's showing
+#cookie-banner:not([hidden]) ~ .back-to-top {
+  bottom: 92px;
+
+  @media (max-width: 720px) {
+    bottom: 150px;
+  }
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: $font-mono;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $blue-500;
+
+  &::before {
+    content: "";
+    width: 18px;
+    height: 2px;
+    background: $amber-500;
+    display: inline-block;
+  }
+}
+
+.section {
+  padding: 112px 0;
+
+  @media (max-width: 720px) {
+    padding: 72px 0;
+  }
+}
+
+.section--tight {
+  padding: 88px 0;
+
+  @media (max-width: 720px) {
+    padding: 56px 0;
+  }
+}
+
+.section--dark {
+  background: linear-gradient(180deg, $blue-900 0%, $blue-800 100%);
+  color: $white;
+
+  .eyebrow {
+    color: $blue-400;
+  }
+}
+
+.section--soft {
+  background: $bg-soft;
+}
+
+.grad-text {
+  color: $amber-400;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 28px;
+  border-radius: 999px;
+  font-family: $font-display;
+  font-weight: 600;
+  font-size: 15.5px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn--primary {
+  position: relative;
+  overflow: hidden;
+  background: $amber-500;
+  color: $blue-900;
+  box-shadow: 0 10px 24px rgba(255, 178, 56, 0.35);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px rgba(255, 178, 56, 0.42);
+
+    &::before {
+      left: 130%;
+    }
+  }
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.28);
+  color: $white;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.btn--ghost-dark {
+  background: transparent;
+  border-color: $border;
+  color: $ink-900;
+
+  &:hover {
+    background: $bg-soft;
+    border-color: $ink-300;
+  }
+}
+
+// A softer, subtly-rounded button (white, uppercase, minimal shadow) — used
+// for the enquiry form's submit button, distinct from the pill-shaped CTAs.
+.btn--soft {
+  background: $bg-soft;
+  color: $ink-900;
+  border-color: $border;
+  border-radius: $radius-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 13.5px;
+  box-shadow: 0 1px 3px rgba(8, 23, 38, 0.1);
+
+  &:hover {
+    background: $white;
+    border-color: $ink-300;
+    transform: translateY(-1px);
+  }
+}
+
+.btn--arrow::after {
+  content: "→";
+  transition: transform 0.15s ease;
+}
+
+.btn--arrow:hover::after {
+  transform: translateX(3px);
+}

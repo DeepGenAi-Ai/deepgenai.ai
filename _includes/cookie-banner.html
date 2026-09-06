@@ -1,0 +1,124 @@
+<div class="cookie-banner" id="cookie-banner" hidden>
+  <div class="container cookie-banner__inner">
+    <p>We use essential cookies to make this site work, and would like to set analytics cookies to help us improve it. See our <a href="{{ '/privacy/#cookies' | relative_url }}" class="link-inline">Cookie Policy</a> for details.</p>
+    <div class="cookie-banner__actions">
+      <button type="button" class="btn btn--ghost-dark" id="cookie-decline">Decline</button>
+      <button type="button" class="btn btn--primary" id="cookie-accept">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Any future non-essential script (analytics, ads, embeds that set their own
+  // cookies) MUST check window.dgHasAnalyticsConsent() before loading — the
+  // banner only protects visitors if the scripts it describes actually check it.
+  // e.g.:
+  //   if (window.dgHasAnalyticsConsent()) { /* inject the script tag here */ }
+  // and call window.dgOnConsentChange(fn) to load it retroactively if the
+  // visitor accepts later (including a silent regional default — see below).
+  (function () {
+    var KEY = "dg_cookie_consent";
+    var banner = document.getElementById("cookie-banner");
+    var listeners = [];
+
+    // UK/EU/EEA + Switzerland: opt-in consent is required before analytics
+    // cookies load, so these visitors always see the banner and start
+    // untracked. Everywhere else, analytics defaults to on (see
+    // applyRegionalDefault below) since prior opt-in isn't legally required —
+    // visitors can still decline any time via "Cookie Settings" in the footer.
+    var CONSENT_REQUIRED_COUNTRIES = [
+      "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR",
+      "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK",
+      "SI", "ES", "SE", "GB", "IS", "LI", "NO", "CH"
+    ];
+
+    function getConsent() {
+      try {
+        return localStorage.getItem(KEY);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    window.dgHasAnalyticsConsent = function () {
+      var value = getConsent();
+      return value === "accepted" || value === "accepted-default";
+    };
+
+    window.dgOnConsentChange = function (fn) {
+      listeners.push(fn);
+    };
+
+    function persist(value) {
+      try {
+        localStorage.setItem(KEY, value);
+      } catch (e) {}
+    }
+
+    function setConsent(value) {
+      persist(value);
+      if (banner) banner.hidden = true;
+      listeners.forEach(function (fn) { fn(value); });
+    }
+
+    window.dgOpenCookieSettings = function () {
+      if (banner) banner.hidden = false;
+    };
+
+    // Silently apply an "on by default" state for visitors outside a region
+    // that requires prior consent. Doesn't touch the banner's visibility —
+    // it only ever shows for these visitors if they open Cookie Settings
+    // themselves — but still notifies listeners so analytics.js can load.
+    function applyRegionalDefault() {
+      if (getConsent()) return; // an explicit choice already exists — never override it
+      persist("accepted-default");
+      listeners.forEach(function (fn) { fn("accepted-default"); });
+    }
+
+    function resolveRegionAndShowBannerIfNeeded() {
+      var settled = false;
+      var FAIL_SAFE_TIMEOUT_MS = 1500;
+
+      function decide(countryCode) {
+        if (settled) return;
+        settled = true;
+        var requiresConsent = !countryCode || CONSENT_REQUIRED_COUNTRIES.indexOf(countryCode) !== -1;
+        if (requiresConsent) {
+          if (banner) banner.hidden = false;
+        } else {
+          applyRegionalDefault();
+        }
+      }
+
+      setTimeout(function () { decide(null); }, FAIL_SAFE_TIMEOUT_MS); // fail safe: unresolved = treat as requiring consent
+
+      fetch("https://www.cloudflare.com/cdn-cgi/trace")
+        .then(function (res) { return res.text(); })
+        .then(function (text) {
+          var match = text.match(/loc=([A-Z]{2})/);
+          decide(match ? match[1] : null);
+        })
+        .catch(function () { decide(null); });
+    }
+
+    if (banner) {
+      var stored = getConsent();
+      if (!stored) {
+        resolveRegionAndShowBannerIfNeeded();
+      }
+
+      var acceptBtn = document.getElementById("cookie-accept");
+      var declineBtn = document.getElementById("cookie-decline");
+      if (acceptBtn) acceptBtn.addEventListener("click", function () { setConsent("accepted"); });
+      if (declineBtn) declineBtn.addEventListener("click", function () { setConsent("declined"); });
+    }
+
+    var settingsLink = document.getElementById("cookie-settings-link");
+    if (settingsLink) {
+      settingsLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.dgOpenCookieSettings();
+      });
+    }
+  })();
+</script>

@@ -1,0 +1,33 @@
+{% if site.google_analytics %}
+<script>
+  (function () {
+    var GA_ID = "{{ site.google_analytics }}";
+
+    function loadGoogleAnalytics() {
+      if (window.dgGaLoaded) return;
+      window.dgGaLoaded = true;
+
+      var script = document.createElement("script");
+      script.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+      script.async = true;
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag("js", new Date());
+      gtag("config", GA_ID, { anonymize_ip: true });
+    }
+
+    // Only load Google Analytics if the visitor has already consented, or the
+    // moment they do — never load it unconditionally. See cookie-banner.html.
+    if (window.dgHasAnalyticsConsent && window.dgHasAnalyticsConsent()) {
+      loadGoogleAnalytics();
+    } else if (window.dgOnConsentChange) {
+      window.dgOnConsentChange(function (value) {
+        if (value === "accepted" || value === "accepted-default") loadGoogleAnalytics();
+      });
+    }
+  })();
+</script>
+{% endif %}

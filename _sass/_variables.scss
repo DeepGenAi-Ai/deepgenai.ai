@@ -1,0 +1,34 @@
+// Brand colors — sampled from DeepGenAI_Logo.png (electric blue mark + near-black
+// wordmark) plus one warm accent added for CTAs / chart contrast.
+$blue-900: #081726;
+$blue-800: #0b2036;
+$blue-700: #0e2c4a;
+$blue-600: #145a7d;
+$blue-500: #1687b0; // primary brand blue — softened from the original electric cyan
+$blue-400: #5aa9c7;
+$blue-100: #eaf6ff;
+
+$amber-500: #ffb238; // accent — not in the logo, added for CTAs/highlights
+$amber-400: #ffc966;
+
+$ink-900: #0c1116;
+$ink-700: #33404d;
+$ink-500: #5b6b7a;
+$ink-300: #94a3b3;
+
+$white: #ffffff;
+$bg-soft: #f4f8fc;
+$border: #e2e9f1;
+
+$font-display: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+$font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+$font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+$radius-sm: 8px;
+$radius-md: 14px;
+$radius-lg: 24px;
+
+$container: 1200px;
+
+$shadow-md: 0 8px 30px rgba(8, 23, 38, 0.08);
+$shadow-lg: 0 24px 60px rgba(8, 23, 38, 0.16);

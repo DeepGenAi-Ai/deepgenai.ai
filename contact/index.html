@@ -1,0 +1,51 @@
+---
+layout: default
+title: Contact
+eyebrow: Get In Touch
+lede: Have a process, product or data challenge? Tell us what you're trying to achieve — we'll help you identify the right approach.
+description: Tell DeepGenAI what you're trying to achieve — process, product or data challenge — and get help identifying the right approach.
+---
+
+{% include page-hero.html %}
+
+<section class="section">
+  <div class="container">
+    <form class="enquiry-form" id="enquiry-form" action="https://formspree.io/f/myeydeoa" method="POST">
+
+      <div class="enquiry-form__row">
+        <label for="ef-name">Name
+          <input type="text" id="ef-name" name="name" autocomplete="name" required>
+        </label>
+        <label for="ef-company">Company
+          <input type="text" id="ef-company" name="company" autocomplete="organization">
+        </label>
+      </div>
+
+      <label for="ef-email">Email
+        <input type="email" id="ef-email" name="email" autocomplete="email" required>
+      </label>
+
+      <label for="ef-message">How can we help?
+        <textarea id="ef-message" name="message" rows="5" required></textarea>
+      </label>
+
+      <!-- Honeypot: hidden from visitors, catches simple bots that fill in every field -->
+      <label class="hp-field" aria-hidden="true">
+        Leave this field empty
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+      </label>
+
+      <input type="hidden" name="_subject" value="New enquiry from deepgenai.ai">
+      <input type="hidden" name="_next" value="{{ '/contact/thanks/' | absolute_url }}">
+
+      <button class="g-recaptcha btn btn--soft" data-sitekey="6LcIKawtAAAAANgyv9P3oLS-I8FHvy23fFf3qAUE" data-callback="onEnquirySubmit" data-action="submit">Send Enquiry</button>
+    </form>
+  </div>
+</section>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+  function onEnquirySubmit() {
+    document.getElementById("enquiry-form").submit();
+  }
+</script>

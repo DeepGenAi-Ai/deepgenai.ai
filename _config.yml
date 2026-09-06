@@ -1,0 +1,68 @@
+title: DeepGenAI
+tagline: AI for Next-Gen Industry
+description: >-
+  DeepGenAI helps organisations improve productivity, quality, efficiency and
+  decision-making through a practical blend of industrial statistics, Lean Six
+  Sigma, AI, analytics and digital transformation.
+url: "https://deepgenai.ai"
+baseurl: ""
+email: info@deepgenai.ai
+logo: /assets/img/logo.png
+google_analytics: G-2LB8QY6H59
+# Loading is gated behind cookie consent — see _includes/analytics.html and
+# _includes/cookie-banner.html — so nothing loads, and no request is made to
+# Google, until a visitor accepts analytics cookies.
+social:
+  name: DeepGenAI
+  # links:
+  #   - https://www.linkedin.com/company/REPLACE_ME
+  # Uncomment once real social profile URLs are confirmed — jekyll-seo-tag
+  # will automatically add them as "sameAs" in the homepage/About JSON-LD.
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/img/logo.png
+      twitter:
+        card: summary
+
+markdown: kramdown
+sass:
+  style: compressed
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+nav:
+  - title: Services
+    url: "/#what-we-do"
+    children:
+      - title: Consultancy
+        url: "/consultancy/"
+      - title: Training
+        url: "/training/"
+      - title: Digital Transformation
+        url: "/digital-transformation/"
+  - title: Industries
+    url: "/industries/"
+  - title: Insights
+    url: "/insights/"
+  - title: About
+    url: "/about/"
+  - title: Contact
+    url: "/contact/"
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - README.md
+  - docs
+  - "*.pdf"
+  - Website_Improvements_Review.md
+  - Owner_Questions.md
+  - CLEAN_Data_Framework_for_SMEs.png
+  - DeepGenAI_Logo.png
+  - assets/img/industries/CREDITS.md

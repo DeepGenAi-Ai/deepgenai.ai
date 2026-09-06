@@ -1,0 +1,193 @@
+.hero {
+  position: relative;
+  background: linear-gradient(180deg, $blue-900 0%, $blue-800 70%, $blue-700 100%);
+  color: $white;
+  overflow: hidden;
+  padding: 104px 0 0;
+}
+
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(560px 420px at 12% 8%, rgba(15, 95, 160, 0.22), transparent 60%),
+    radial-gradient(480px 360px at 92% 4%, rgba(255, 178, 56, 0.12), transparent 60%);
+}
+
+.hero__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 56px;
+  align-items: center;
+  padding-bottom: 80px;
+
+  @media (max-width: 980px) {
+    grid-template-columns: 1fr;
+    padding-bottom: 48px;
+  }
+}
+
+.hero__title {
+  font-size: clamp(38px, 5.4vw, 64px);
+  margin: 18px 0 22px;
+}
+
+.hero__lede {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 560px;
+  margin-bottom: 34px;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 44px;
+}
+
+.hero__proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 40px;
+}
+
+.hero__proof-item {
+  min-width: 96px;
+}
+
+.hero__proof-num {
+  font-family: $font-display;
+  font-weight: 700;
+  font-size: 26px;
+  color: $white;
+}
+
+.hero__proof-label {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 2px;
+}
+
+// Visual: layered process card stack, decorative — evokes analytics/process flow
+.hero__visual {
+  position: relative;
+  height: 440px;
+
+  @media (max-width: 980px) {
+    height: 320px;
+  }
+}
+
+.hero__panel {
+  position: absolute;
+  width: 100%;
+  max-width: 380px;
+  border-radius: $radius-lg;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: $shadow-lg;
+  padding: 22px;
+}
+
+.hero__panel--back {
+  top: 56px;
+  right: 0;
+  opacity: 0.5;
+  background: rgba(255, 255, 255, 0.06);
+  transform: rotate(3deg);
+}
+
+.hero__panel--front {
+  top: 0;
+  left: 0;
+  background: linear-gradient(165deg, rgba(20, 42, 68, 0.98), rgba(10, 22, 38, 0.98));
+}
+
+.hero__panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.hero__panel-title {
+  font-family: $font-mono;
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.hero__panel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $amber-500;
+  box-shadow: 0 0 0 4px rgba(255, 178, 56, 0.18);
+}
+
+.hero__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 120px;
+  margin-bottom: 18px;
+}
+
+.hero__bar {
+  flex: 1;
+  border-radius: 6px 6px 2px 2px;
+  background: linear-gradient(180deg, $blue-400, $blue-600);
+}
+
+.hero__bar--amber {
+  background: linear-gradient(180deg, $amber-400, $amber-500);
+}
+
+.hero__panel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero__panel-row span:last-child {
+  font-family: $font-mono;
+  color: $amber-400;
+  font-weight: 600;
+}
+
+.hero__panel-row span.status-done {
+  color: #7dd8a6;
+}
+
+.hero__ribbon {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.hero__ribbon-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 40px;
+  align-items: center;
+  padding: 22px 0;
+  font-family: $font-mono;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.hero__ribbon-inner a {
+  transition: color 0.15s ease;
+}
+
+.hero__ribbon-inner a:hover {
+  color: $amber-400;
+}

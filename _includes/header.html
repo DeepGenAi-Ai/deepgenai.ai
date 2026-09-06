@@ -1,0 +1,32 @@
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a href="{{ '/' | relative_url }}" class="site-header__brand">
+      <span class="site-header__mark"><img src="{{ '/assets/img/mark.png' | relative_url }}" alt="" width="34" height="34"></span>
+      <span>
+        deepgenai<span style="color:#ffb238">.ai</span>
+        <small>AI for Next-Gen Industry</small>
+      </span>
+    </a>
+
+    <nav class="site-nav">
+      {% for item in site.nav %}
+        {% if item.children %}
+          <div class="site-nav__dropdown">
+            <a href="{{ item.url }}" class="site-nav__dropdown-toggle">{{ item.title }}</a>
+            <div class="site-nav__dropdown-menu">
+              {% for child in item.children %}
+                <a href="{{ child.url }}">{{ child.title }}</a>
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}
+          <a href="{{ item.url }}">{{ item.title }}</a>
+        {% endif %}
+      {% endfor %}
+    </nav>
+
+    <div class="site-header__cta">
+      <a href="{{ '/contact/' | relative_url }}" class="btn btn--primary">Book a Strategy Call</a>
+    </div>
+  </div>
+</header>

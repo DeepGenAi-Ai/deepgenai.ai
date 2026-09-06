@@ -1,0 +1,16 @@
+<section class="section page-hero section--dark">
+  <div class="container section-head">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ '/' | relative_url }}">Home</a>
+      <span>/</span>
+      {% if page.parent_title and page.parent_url %}
+        <a href="{{ page.parent_url | relative_url }}">{{ page.parent_title }}</a>
+        <span>/</span>
+      {% endif %}
+      <span>{{ page.title }}</span>
+    </nav>
+    <span class="eyebrow">{{ page.eyebrow }}</span>
+    <h1>{{ page.title }}</h1>
+    {% if page.lede %}<p>{{ page.lede }}</p>{% endif %}
+  </div>
+</section>
