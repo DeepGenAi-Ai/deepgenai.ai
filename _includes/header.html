@@ -12,15 +12,15 @@
       {% for item in site.nav %}
         {% if item.children %}
           <div class="site-nav__dropdown">
-            <a href="{{ item.url }}" class="site-nav__dropdown-toggle">{{ item.title }}</a>
+            <a href="{{ item.url | relative_url }}" class="site-nav__dropdown-toggle">{{ item.title }}</a>
             <div class="site-nav__dropdown-menu">
               {% for child in item.children %}
-                <a href="{{ child.url }}">{{ child.title }}</a>
+                <a href="{{ child.url | relative_url }}">{{ child.title }}</a>
               {% endfor %}
             </div>
           </div>
         {% else %}
-          <a href="{{ item.url }}">{{ item.title }}</a>
+          <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
         {% endif %}
       {% endfor %}
       <a href="{{ '/contact/' | relative_url }}" class="btn btn--primary site-nav__cta">Book a Strategy Call</a>
