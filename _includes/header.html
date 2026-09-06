@@ -2,13 +2,13 @@
   <div class="container site-header__inner">
     <a href="{{ '/' | relative_url }}" class="site-header__brand">
       <span class="site-header__mark"><img src="{{ '/assets/img/mark.png' | relative_url }}" alt="" width="34" height="34"></span>
-      <span>
-        deepgenai<span style="color:#ffb238">.ai</span>
+      <span class="site-header__brand-text">
+        <span class="site-header__brand-name">deepgenai<span style="color:#ffb238">.ai</span></span>
         <small>AI for Next-Gen Industry</small>
       </span>
     </a>
 
-    <nav class="site-nav">
+    <nav class="site-nav" id="site-nav">
       {% for item in site.nav %}
         {% if item.children %}
           <div class="site-nav__dropdown">
@@ -26,7 +26,14 @@
     </nav>
 
     <div class="site-header__cta">
-      <a href="{{ '/contact/' | relative_url }}" class="btn btn--primary">Book a Strategy Call</a>
+      <a href="{{ '/contact/' | relative_url }}" class="btn btn--primary">
+        <span class="site-header__cta-full">Book a Strategy Call</span>
+        <span class="site-header__cta-short">Book a Call</span>
+      </a>
     </div>
+
+    <button type="button" class="site-header__menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">
+      <span class="site-header__menu-icon"></span>
+    </button>
   </div>
 </header>

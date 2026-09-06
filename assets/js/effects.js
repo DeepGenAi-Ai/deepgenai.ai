@@ -30,6 +30,29 @@
     if (a.getAttribute("href") === path) a.classList.add("is-active");
   });
 
+  // Mobile nav toggle ---------------------------------------------------------
+  var menuToggle = document.querySelector(".site-header__menu-toggle");
+  var siteNav = document.querySelector(".site-nav");
+  if (menuToggle && siteNav) {
+    var closeMenu = function () {
+      siteNav.classList.remove("is-open");
+      menuToggle.setAttribute("aria-expanded", "false");
+    };
+
+    menuToggle.addEventListener("click", function () {
+      var isOpen = siteNav.classList.toggle("is-open");
+      menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    siteNav.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", closeMenu);
+    });
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 760) closeMenu();
+    });
+  }
+
   // Back to top -------------------------------------------------------------
   var backToTop = document.getElementById("back-to-top");
   if (backToTop) {

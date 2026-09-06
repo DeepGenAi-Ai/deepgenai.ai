@@ -26,6 +26,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0; // allow the brand text to shrink/truncate instead of forcing the row to overflow
   font-family: $font-display;
   font-weight: 700;
   font-size: 19px;
@@ -43,6 +44,18 @@
   height: 34px;
   width: auto;
   display: block;
+}
+
+.site-header__brand-text {
+  min-width: 0;
+}
+
+.site-header__brand-name {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .site-header__brand small {
@@ -63,6 +76,23 @@
 
   @media (max-width: 760px) {
     display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    padding: 10px 16px calc(20px + env(safe-area-inset-bottom, 0px));
+    max-height: calc(100vh - 100%);
+    overflow-y: auto;
+    background: $blue-900;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: $shadow-lg;
+
+    &.is-open {
+      display: flex;
+    }
   }
 }
 
@@ -141,16 +171,108 @@
   transform: translateY(0);
 }
 
+// Below 760px the nav becomes a tap-to-open panel (see .site-header__menu-toggle),
+// so there's no hover to reveal the Services dropdown — show it expanded inline instead.
+@media (max-width: 760px) {
+  .site-nav__dropdown-toggle::after {
+    display: none;
+  }
+
+  .site-nav__dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    min-width: 0;
+    padding: 0 0 0 14px;
+    margin-top: 2px;
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+}
+
+.site-header__menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: $white;
+  cursor: pointer;
+  flex: none;
+
+  @media (max-width: 760px) {
+    display: inline-flex;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.site-header__menu-icon,
+.site-header__menu-icon::before,
+.site-header__menu-icon::after {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+  transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+}
+
+.site-header__menu-icon {
+  position: relative;
+}
+
+.site-header__menu-icon::before,
+.site-header__menu-icon::after {
+  position: absolute;
+  left: 0;
+}
+
+.site-header__menu-icon::before {
+  top: -6px;
+}
+
+.site-header__menu-icon::after {
+  top: 6px;
+}
+
+.site-header__menu-toggle[aria-expanded="true"] .site-header__menu-icon {
+  background: transparent;
+}
+
+.site-header__menu-toggle[aria-expanded="true"] .site-header__menu-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.site-header__menu-toggle[aria-expanded="true"] .site-header__menu-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
 .site-header__cta {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: none;
+  flex: none; // never shrink the CTA button, even if the brand name has to truncate
 }
 
 .site-header__cta .btn {
   padding: 11px 20px;
   font-size: 14px;
+}
+
+.site-header__cta-short {
+  display: none;
 }
 
 @media (max-width: 480px) {
@@ -161,5 +283,15 @@
   .site-header__cta .btn {
     padding: 9px 14px;
     font-size: 12.5px;
+  }
+}
+
+@media (max-width: 400px) {
+  .site-header__cta-full {
+    display: none;
+  }
+
+  .site-header__cta-short {
+    display: inline;
   }
 }
