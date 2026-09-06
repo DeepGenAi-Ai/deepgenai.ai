@@ -74,7 +74,7 @@
   align-items: center;
   gap: 8px;
 
-  @media (max-width: 760px) {
+  @media (max-width: 960px) {
     display: none;
     position: absolute;
     top: 100%;
@@ -171,9 +171,9 @@
   transform: translateY(0);
 }
 
-// Below 760px the nav becomes a tap-to-open panel (see .site-header__menu-toggle),
+// Below 960px the nav becomes a tap-to-open panel (see .site-header__menu-toggle),
 // so there's no hover to reveal the Services dropdown — show it expanded inline instead.
-@media (max-width: 760px) {
+@media (max-width: 960px) {
   .site-nav__dropdown-toggle::after {
     display: none;
   }
@@ -206,7 +206,7 @@
   cursor: pointer;
   flex: none;
 
-  @media (max-width: 760px) {
+  @media (max-width: 960px) {
     display: inline-flex;
   }
 
@@ -263,7 +263,14 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: none; // never shrink the CTA button, even if the brand name has to truncate
+  flex: none;
+
+  // Below 960px the nav collapses into the hamburger menu, which carries its
+  // own "Book a Strategy Call" button (.site-nav__cta) — no room for it in
+  // the header row too, and no need to shrink/relabel it here any more.
+  @media (max-width: 960px) {
+    display: none;
+  }
 }
 
 .site-header__cta .btn {
@@ -271,27 +278,19 @@
   font-size: 14px;
 }
 
-.site-header__cta-short {
-  display: none;
-}
-
 @media (max-width: 480px) {
   .site-header__brand small {
     display: none;
   }
-
-  .site-header__cta .btn {
-    padding: 9px 14px;
-    font-size: 12.5px;
-  }
 }
 
-@media (max-width: 400px) {
-  .site-header__cta-full {
-    display: none;
-  }
+.site-nav__cta {
+  display: none;
 
-  .site-header__cta-short {
-    display: inline;
+  @media (max-width: 960px) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
   }
 }

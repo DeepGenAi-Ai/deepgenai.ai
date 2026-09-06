@@ -23,13 +23,11 @@
           <a href="{{ item.url }}">{{ item.title }}</a>
         {% endif %}
       {% endfor %}
+      <a href="{{ '/contact/' | relative_url }}" class="btn btn--primary site-nav__cta">Book a Strategy Call</a>
     </nav>
 
     <div class="site-header__cta">
-      <a href="{{ '/contact/' | relative_url }}" class="btn btn--primary">
-        <span class="site-header__cta-full">Book a Strategy Call</span>
-        <span class="site-header__cta-short">Book a Call</span>
-      </a>
+      <a href="{{ '/contact/' | relative_url }}" class="btn btn--primary">Book a Strategy Call</a>
     </div>
 
     <button type="button" class="site-header__menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="site-nav">
