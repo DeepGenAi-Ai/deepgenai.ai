@@ -433,6 +433,108 @@
   margin: 8px 0 0;
 }
 
+// Belt-coloured cards/tags, used on the Training page to make the Six Sigma
+// Yellow/Green/Black Belt offering stand out from the rest of the catalogue.
+.belt-card {
+  border-top-width: 6px;
+  border-top-style: solid;
+}
+
+.belt-card--yellow {
+  border-top-color: $belt-yellow;
+}
+
+.belt-card--green {
+  border-top-color: $belt-green;
+}
+
+.belt-card--black {
+  border-top-color: $belt-black;
+}
+
+.belt-card--yellow:hover {
+  border-color: $belt-yellow;
+  box-shadow: 0 12px 24px rgba(245, 197, 24, 0.25);
+}
+
+.belt-card--green:hover {
+  border-color: $belt-green;
+  box-shadow: 0 12px 24px rgba(30, 122, 52, 0.2);
+}
+
+.belt-card--black:hover {
+  border-color: $belt-black;
+  box-shadow: 0 12px 24px rgba(26, 26, 26, 0.2);
+}
+
+.belt-card__badge {
+  display: inline-block;
+  font-family: $font-mono;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.belt-card--yellow .belt-card__badge {
+  background: rgba(245, 197, 24, 0.18);
+  color: $belt-yellow-text;
+}
+
+.belt-card--green .belt-card__badge {
+  background: rgba(30, 122, 52, 0.14);
+  color: $belt-green;
+}
+
+.belt-card--black .belt-card__badge {
+  background: $belt-black;
+  color: $white;
+}
+
+.belt-card h3 {
+  margin-top: 0;
+}
+
+.belt-card--yellow h3 {
+  color: $belt-yellow-text;
+}
+
+.belt-card--green h3 {
+  color: $belt-green;
+}
+
+.belt-card--black h3 {
+  color: $belt-black;
+}
+
+.belt-tag {
+  display: inline-block;
+  font-family: $font-mono;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+}
+
+.belt-tag--yellow {
+  background: rgba(245, 197, 24, 0.18);
+  color: $belt-yellow-text;
+}
+
+.belt-tag--green {
+  background: rgba(30, 122, 52, 0.14);
+  color: $belt-green;
+}
+
+.belt-tag--black {
+  background: $belt-black;
+  color: $white;
+}
+
 // Cookie consent banner -----------------------------------------------------
 .cookie-banner {
   display: none;
